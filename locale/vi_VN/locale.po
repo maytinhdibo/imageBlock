@@ -1,8 +1,20 @@
-msgid "plugins.block.indexing.displayName"
-msgstr "Abstract and Indexing Block"
+msgid "plugins.block.imageBlock.displayName"
+msgstr "Image Block"
 
-msgid "plugins.block.indexing.description"
-msgstr "This plugin provides a sidebar block with Abstract and Indexing data."
+msgid "plugins.block.imageBlock.description"
+msgstr "This plugin provides a sidebar block with Image data."
 
-msgid "plugins.block.indexing.label"
-msgstr "Tóm tắt và lập chỉ mục"
+msgid "plugins.block.imageBlock.label"
+msgstr "Image Block"
+
+msgid "plugins.block.imageBlock.manager.settings.tittle"
+msgstr "Tiêu đề"
+
+msgid "plugins.block.imageBlock.manager.settings.FieldRequired"
+msgstr "Không được bỏ trống trường này"
+
+msgid "plugins.block.imageBlock.manager.settings.description"
+msgstr "Tạo nội dung image block"
+
+msgid "plugins.block.imageBlock.manager.settings.content"
+msgstr "Nội dung"

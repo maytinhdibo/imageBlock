@@ -9,13 +9,24 @@
  *}
 <div class="pkp_block index-card" style="text-align: center">
     <h2 class="title">
-        {translate key="plugins.block.indexing.label"}
+        {$tittle}
     </h2>
 
-    <div>
-        <a href="https://vcgate.vnu.edu.vn/"><img src="{$baseUrl}/templates/images/indexing/vcgate.png"></a>
-        <a href="https://scholar.google.com.vn/"><img src="{$baseUrl}/templates/images/indexing/gscholar.png"></a>
+    <div class="content-image">
+        {$content}
     </div>
-
-
 </div>
+<style type="text/css">
+    {literal}
+    /* this is an intersting idea for this section */
+    .content-image img {
+        max-width: 100%;
+        padding: 0;
+        height: auto;
+    }
+    .content-image p{
+        vertical-align: middle;
+        text-align: center;
+    }
+    {/literal}
+</style>
