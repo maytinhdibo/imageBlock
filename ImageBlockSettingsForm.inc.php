@@ -31,7 +31,7 @@ class ImageBlockSettingsForm extends Form {
 		parent::__construct($plugin->getTemplateResource('settingsForm.tpl'));
 
 		$this->addCheck(new FormValidator($this, 'content', 'required', 'plugins.block.imageBlock.manager.settings.FieldRequired'));
-        $this->addCheck(new FormValidator($this, 'tittle', 'required', 'plugins.block.imageBlock.manager.settings.FieldRequired'));
+        //$this->addCheck(new FormValidator($this, 'tittle', 'required', 'plugins.block.imageBlock.manager.settings.FieldRequired'));
 		$this->addCheck(new FormValidatorPost($this));
 		$this->addCheck(new FormValidatorCSRF($this));
 	}
@@ -51,7 +51,7 @@ class ImageBlockSettingsForm extends Form {
 	 */
 	function readInputData() {
 		$this->readUserVars(array('content'));
-        $this->readUserVars(array('tittle'));
+        //$this->readUserVars(array('tittle'));
 	}
 
 	/**
@@ -68,7 +68,7 @@ class ImageBlockSettingsForm extends Form {
 	 */
 	function execute(...$functionArgs) {
 		$this->_plugin->updateSetting($this->_journalId, 'content', trim($this->getData('content'), "\"\';"), 'string');
-        $this->_plugin->updateSetting($this->_journalId, 'tittle', trim($this->getData('tittle'), "\"\';"), 'string');
+        //$this->_plugin->updateSetting($this->_journalId, 'tittle', trim($this->getData('tittle'), "\"\';"), 'string');
 		parent::execute(...$functionArgs);
 	}
 }

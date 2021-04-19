@@ -29,10 +29,10 @@ class ImageBlockPlugin extends BlockPlugin {
 		}
         $pluginSettingsDao = DAORegistry::getDAO('PluginSettingsDAO');
         $content = $pluginSettingsDao->getSetting($request->getContext()->getId(), "imageblockplugin", 'content');
-        $tittle =  $this->getSetting($context->getId(), 'tittle');
+        //$tittle =  $this->getSetting($context->getId(), 'tittle');
         $templateMgr->assign(array(
             'content' => $content,
-            'tittle' => $tittle,
+            //'tittle' => $tittle,
         ));
 		return parent::getContents($templateMgr);
 	}
