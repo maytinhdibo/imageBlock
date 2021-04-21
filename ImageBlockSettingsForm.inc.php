@@ -19,19 +19,29 @@ class ImageBlockSettingsForm extends Form {
 	/** @var object */
 	var $_plugin;
 
+    /** @var object */
+    var $_imageBlock;
+
+    /** @var object */
+    var $_imageBlocksDao;
+
 	/**
 	 * Constructor
 	 * @param $plugin ImageBlockPlugin
 	 * @param $journalId int
 	 */
-	function __construct($plugin, $journalId) {
+	function __construct($plugin, $journalId,$imageBlocksDao) {
 		$this->_journalId = $journalId;
 		$this->_plugin = $plugin;
+
+        $this->_imageBlock = $imageBlocksDao->getLastestByContextId($this->_journalId)==null?$imageBlocksDao->newDataObject():$imageBlocksDao->getLastestByContextId($this->_journalId);
+
+        $this->_imageBlocksDao = $imageBlocksDao;
 
 		parent::__construct($plugin->getTemplateResource('settingsForm.tpl'));
 
 		$this->addCheck(new FormValidator($this, 'content', 'required', 'plugins.block.imageBlock.manager.settings.FieldRequired'));
-        //$this->addCheck(new FormValidator($this, 'tittle', 'required', 'plugins.block.imageBlock.manager.settings.FieldRequired'));
+        $this->addCheck(new FormValidator($this, 'title', 'required', 'plugins.block.imageBlock.manager.settings.FieldRequired'));
 		$this->addCheck(new FormValidatorPost($this));
 		$this->addCheck(new FormValidatorCSRF($this));
 	}
@@ -41,8 +51,8 @@ class ImageBlockSettingsForm extends Form {
 	 */
 	function initData() {
 		$this->_data = array(
-			'content' => $this->_plugin->getSetting($this->_journalId, 'content'),
-            'tittle' => $this->_plugin->getSetting($this->_journalId, 'tittle'),
+			'title' => $this->_imageBlock->getTitle(null),
+            'content' => $this->_imageBlock->getContent(null),
 		);
 	}
 
@@ -51,7 +61,7 @@ class ImageBlockSettingsForm extends Form {
 	 */
 	function readInputData() {
 		$this->readUserVars(array('content'));
-        //$this->readUserVars(array('tittle'));
+        $this->readUserVars(array('title'));
 	}
 
 	/**
@@ -67,9 +77,15 @@ class ImageBlockSettingsForm extends Form {
 	 * @copydoc Form::execute()
 	 */
 	function execute(...$functionArgs) {
-		$this->_plugin->updateSetting($this->_journalId, 'content', trim($this->getData('content'), "\"\';"), 'string');
-        //$this->_plugin->updateSetting($this->_journalId, 'tittle', trim($this->getData('tittle'), "\"\';"), 'string');
-		parent::execute(...$functionArgs);
+        $this->_imageBlock->setTitle((array) $this->getData('title'), null);
+        $this->_imageBlock->setContent((array) $this->getData('content'), null);
+        $this->_imageBlock->setContextId($this->_journalId);
+        if ($this->_imageBlocksDao->getLastestByContextId($this->_journalId)!=null) {
+            $this->_imageBlocksDao->updateObject($this->_imageBlock);
+        } else {
+            $this->_imageBlocksDao->insertObject($this->_imageBlock);
+        }
+        parent::execute(...$functionArgs);
 	}
 }
 

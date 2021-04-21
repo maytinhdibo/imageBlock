@@ -4,6 +4,22 @@
 import('lib.pkp.classes.plugins.BlockPlugin');
 
 class ImageBlockPlugin extends BlockPlugin {
+    /**
+     * @copydoc Plugin::register()
+     */
+    function register($category, $path, $mainContextId = null) {
+        if (parent::register($category, $path, $mainContextId)) {
+            if ($this->getEnabled($mainContextId)) {
+                // Register the static pages DAO.
+                import('plugins.blocks.imageBlock.classes.ImageBlocksDAO');
+                $imageBlocksDAO = new ImageBlocksDAO();
+                DAORegistry::registerDAO('ImageBlocksDAO', $imageBlocksDAO);
+            }
+            return true;
+        }
+        return false;
+    }
+
 	/**
 	 * Get the display name of this plugin.
 	 * @return String
@@ -27,12 +43,12 @@ class ImageBlockPlugin extends BlockPlugin {
 		if (!$context) {
 			return '';
 		}
-        $pluginSettingsDao = DAORegistry::getDAO('PluginSettingsDAO');
-        $content = $pluginSettingsDao->getSetting($request->getContext()->getId(), "imageblockplugin", 'content');
-        //$tittle =  $this->getSetting($context->getId(), 'tittle');
+        $imageBlocksDao = DAORegistry::getDAO('ImageBlocksDAO');
+        $content = $imageBlocksDao->getLastestByContextId($context->getId())==null?"No content":$imageBlocksDao->getLastestByContextId($context->getId())->getLocalizedContent();
+        $title = $imageBlocksDao->getLastestByContextId($context->getId())==null?"Image Block":$imageBlocksDao->getLastestByContextId($context->getId())->getLocalizedTitle();
         $templateMgr->assign(array(
             'content' => $content,
-            //'tittle' => $tittle,
+            'title' => $title,
         ));
 		return parent::getContents($templateMgr);
 	}
@@ -72,7 +88,10 @@ class ImageBlockPlugin extends BlockPlugin {
                 $templateMgr->registerPlugin('function', 'plugin_url', array($this, 'smartyPluginUrl'));
 
                 $this->import('ImageBlockSettingsForm');
-                $form = new ImageBlockSettingsForm($this, $context->getId());
+                $imageBlocksDao = DAORegistry::getDAO('ImageBlocksDAO');
+                //$imageBlock = $imageBlocksDao->getById(1)==null?$imageBlocksDao->newDataObject():$imageBlocksDao->getById(1);
+
+                $form = new ImageBlockSettingsForm($this, $context->getId(),$imageBlocksDao);
 
                 if ($request->getUserVar('save')) {
                     $form->readInputData();
@@ -86,5 +105,13 @@ class ImageBlockPlugin extends BlockPlugin {
                 return new JSONMessage(true, $form->fetch($request));
         }
         return parent::manage($args, $request);
+    }
+
+    /**
+     * Get the filename of the ADODB schema for this plugin.
+     * @return string Full path and filename to schema descriptor.
+     */
+    function getInstallSchemaFile() {
+        return $this->getPluginPath() . '/schema.xml';
     }
 }

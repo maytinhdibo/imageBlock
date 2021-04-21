@@ -7,8 +7,8 @@ msgstr "This plugin provides a sidebar block with Image data."
 msgid "plugins.block.imageBlock.label"
 msgstr "Sponsors"
 
-msgid "plugins.block.imageBlock.manager.settings.tittle"
-msgstr "Tittle"
+msgid "plugins.block.imageBlock.manager.settings.title"
+msgstr "Title"
 
 msgid "plugins.block.imageBlock.manager.settings.FieldRequired"
 msgstr "Field Required"

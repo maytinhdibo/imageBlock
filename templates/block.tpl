@@ -9,7 +9,7 @@
  *}
 <div class="pkp_block index-card" style="text-align: center">
     <h2 class="title">
-        {translate key="plugins.block.imageBlock.label"}
+        {$title}
     </h2>
 
     <div class="content-image">

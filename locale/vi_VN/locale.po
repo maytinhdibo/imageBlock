@@ -7,7 +7,7 @@ msgstr "This plugin provides a sidebar block with Image data."
 msgid "plugins.block.imageBlock.label"
 msgstr "Đơn vị tài trợ"
 
-msgid "plugins.block.imageBlock.manager.settings.tittle"
+msgid "plugins.block.imageBlock.manager.settings.title"
 msgstr "Tiêu đề"
 
 msgid "plugins.block.imageBlock.manager.settings.FieldRequired"
