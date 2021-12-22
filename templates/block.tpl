@@ -7,11 +7,7 @@
  *
  * Common site sidebar menu -- "Make a Submission" block.
  *}
-<div class="pkp_block index-card" style="text-align: center">
-    <h2 class="title">
-        {$title}
-    </h2>
-
+<div style="text-align: center; margin-top: 1.75em;">
     <div class="content-image">
         {$content}
     </div>
@@ -20,6 +16,7 @@
     {literal}
     /* this is an intersting idea for this section */
     .content-image img {
+        margin-bottom: 1em;
         max-width: 100%;
         padding: 0;
         height: auto;
